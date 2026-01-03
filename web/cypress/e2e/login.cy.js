@@ -2,16 +2,9 @@
 //It implemneta um teste automatizado
 describe('Login', ()=>{
   it('Deve logar com sucesso', ()=> {
-    cy.viewport(1440, 900)
-    cy.visit('http://localhost:3000')
+    cy.iniciar()
+    cy.submeterLogin('papito@webdojo.com', 'katana123')
 
-    cy.get('#email').type('papito@webdojo.com') //A função type é utilizada para elementos com entradas de dados
-    cy.get('#password').type('katana123')
-
-    //cy.get('.bg-\[\#8257E5\]') - Esse formatop nãoé um localizador válido para o cypress
-    cy.contains('button', 'Entrar').click()
-    //cy.wait(3000)
-    
     cy.get('[data-cy="user-name"]')
       .should('be.visible')
       .and('have.text', 'Fernando Papito')
@@ -19,5 +12,21 @@ describe('Login', ()=>{
     cy.get('[data-cy="welcome-message"]')
       .should('be.visible')
       .and('have.text', 'Olá QA, esse é o seu Dojo para aprender Automação de Testes.')
+  })
+
+  it('Não deve logar com senha inválida', ()=> {
+    cy.iniciar()
+    cy.submeterLogin('papito@webdojo.com', 'katana321')
+
+    cy.contains('Acesso negado! Tente novamente.')
+      .should('be.visible')      
+  })
+
+  it('Não deve logar com e-mail inválido', ()=> {
+    cy.iniciar()
+    cy.submeterLogin('404@webdojo.com', 'katana123')
+
+    cy.contains('Acesso negado! Tente novamente.')
+      .should('be.visible')      
   })
 })

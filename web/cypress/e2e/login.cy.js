@@ -10,6 +10,14 @@ describe('Login', ()=>{
 
     //cy.get('.bg-\[\#8257E5\]') - Esse formatop nãoé um localizador válido para o cypress
     cy.contains('button', 'Entrar').click()
-    cy.wait(3000)
+    //cy.wait(3000)
+    
+    cy.get('[data-cy="user-name"]')
+      .should('be.visible')
+      .and('have.text', 'Fernando Papito')
+
+    cy.get('[data-cy="welcome-message"]')
+      .should('be.visible')
+      .and('have.text', 'Olá QA, esse é o seu Dojo para aprender Automação de Testes.')
   })
 })

@@ -18,5 +18,15 @@ describe('Formulário de consultoria', () => {
             .parent()
             .find('select')
             .select('Individual')
+
+        ////span[text()="Pessoa Física"]/..//input
+        cy.contains('label', 'Pessoa Física')
+            .find('input')
+            .check()
+            .should('be.checked')
+
+        cy.contains('label', 'Pessoa Jurídica')
+            .find('input')
+            .should('be.not.checked')
     });
 });
